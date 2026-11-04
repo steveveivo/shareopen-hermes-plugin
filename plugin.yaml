@@ -1,0 +1,31 @@
+name: shareopen-platform
+label: ShareOpen
+kind: platform
+version: 1.2.0
+description: >
+  ShareOpen IM gateway adapter for Hermes Agent.
+  Connects to a local ShareOpen instance via WebSocket and relays messages
+  between ShareOpen users and the Hermes agent. Provides a Telegram-free,
+  fully local, feature-rich IM experience with tool approvals, multi-agent
+  support, and agent-to-agent communication.
+author: Blue (Veivo Team)
+# ``requires_env`` entries are surfaced in ``hermes config`` UI via the
+# platform-plugin env var injector in ``hermes_cli/config.py``.
+requires_env:
+  - name: SHAREOPEN_URL
+    description: "ShareOpen backend URL (e.g. http://localhost:3021)"
+    prompt: "ShareOpen backend URL"
+    password: false
+  - name: SHAREOPEN_TOKEN
+    description: "Agent token from ShareOpen (created via /api/hermes/create or UI)"
+    prompt: "ShareOpen agent token"
+    password: true
+optional_env:
+  - name: SHAREOPEN_AGENT_ID
+    description: "ShareOpen agent ID (optional — auto-discovered from token if not set)"
+    prompt: "Agent ID (optional)"
+    password: false
+  - name: SHAREOPEN_RECONNECT_DELAY
+    description: "WebSocket reconnect delay in seconds (default: 5)"
+    prompt: "Reconnect delay (seconds)"
+    password: false

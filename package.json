@@ -1,0 +1,16 @@
+{
+  "name": "shareopen-hermes-plugin",
+  "version": "1.2.0",
+  "description": "ShareOpen IM gateway adapter for Hermes Agent (platform plugin).",
+  "main": "./adapter.py",
+  "files": [
+    "adapter.py",
+    "plugin.yaml",
+    "__init__.py",
+    "INSTALL.md",
+    "CHANGELOG.md"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}
