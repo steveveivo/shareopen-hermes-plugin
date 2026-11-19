@@ -829,15 +829,16 @@ class ShareOpenAdapter(BasePlatformAdapter):
         if not self._ws or self._ws.close_code is not None:
             return
         try:
+            # [align 2026-11-17] 后端 handleProgressUpdate 契约: {conversation_id, progress, status}.
+            # progress 必须 truthy (否则被 L999 !progress 闸丢弃); status 缺省 'in_progress'.
+            # 旧帧发的是 event_type/tool_name/preview/... 后端收不到 progress/status → 帧被丢.
+            status = "done" if kwargs.get("ok", True) else "error"
+            progress_text = preview or tool_name or event_type or ""
             msg = {
                 "type": "progress_update",
                 "conversation_id": conversation_id,
-                "event_type": event_type,
-                "tool_name": tool_name or "",
-                "preview": preview or "",
-                "args": args or {},
-                "duration": kwargs.get("duration", 0),
-                "ok": kwargs.get("ok", True),
+                "progress": progress_text,
+                "status": status,
             }
             await self._ws.send(json.dumps(msg))
             logger.debug("ShareOpen: sent tool progress %s for %s", event_type, tool_name)
